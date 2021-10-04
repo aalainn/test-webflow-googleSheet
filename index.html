@@ -15,7 +15,7 @@
         <input type="submit" value="Abschicken">
     </form>
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyAFXDd7T6m-P6nhoqgTszzWrafWglMQaNm6u24X3ytDNuujONx_muaqZJfbJ8ZZ1GPsg/exec'
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyJo16q9IbOy4jqowSjZbsjvsuq4U2d6dGUP4xRFnnMo8CIbJaYJokIpJXnNpgsQNiEmQ/exec'
         const form = document.forms['contact-form']
             form.addEventListener('submit', e => {
 
@@ -36,9 +36,9 @@
                         // mode: 'no-cors'
                     }
                 )
-                .then(response => response.json())
-                .then(data => console.log(data))
-                // .catch(error => console.error('Error!', error.message))
+                // .then(response => response.json())
+                .then(response => console.log('Response from server: ', response))
+                .catch(error => console.error('Error!', error.message))
             form.reset();  
         })
         </script>
