@@ -15,7 +15,7 @@
         <input type="submit" value="Abschicken">
     </form>
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbyJo16q9IbOy4jqowSjZbsjvsuq4U2d6dGUP4xRFnnMo8CIbJaYJokIpJXnNpgsQNiEmQ/exec'
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyr69eEdlO_w_eFXwno7AKWySyDIwlhuwCJuddkBPwtPMUG-qj-Wnio_qqBhb6GjVO3-g/exec'
         const form = document.forms['contact-form']
             form.addEventListener('submit', e => {
 
@@ -28,17 +28,34 @@
                 }
 
                 e.preventDefault();
-                fetch(
-                    scriptURL, 
-                    {   
-                        method: 'POST', 
-                        body : formData, 
-                        // mode: 'no-cors'
-                    }
-                )
-                // .then(response => response.json())
-                .then(response => console.log('Response from server: ', response))
-                .catch(error => console.error('Error!', error.message))
+                // fetch(
+                //     scriptURL, 
+                //     {   
+                //         method: 'POST', 
+                //         body : formData, 
+                //         // mode: 'no-cors'
+                //     }
+                // )
+                // // .then(response => response.json())
+                // .then(response => console.log('Response from server: ', response))
+                // .catch(error => console.error('Error!', error.message))
+
+                fetch( scriptURL, {
+                    method: 'POST',
+                    body: formData,
+                    // headers: {
+                    //     'Content-Type': 'text/plain;charset=utf-8',
+                    // }
+                }).then(response => {
+                    console.log("successsss:", response);
+                    return response.json() // convert (parse?) response from string to JSON-Object and "return" it to the next "then"
+                }).then(data => {
+                    console.log("data:", data);
+                }).catch(err => {
+                    console.log("Error:" + err);
+                });
+
+
             form.reset();  
         })
         </script>

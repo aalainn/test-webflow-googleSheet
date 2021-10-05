@@ -1,0 +1,82 @@
+<html>
+ 
+<head>
+    <title>Contact Form</title>
+    <style>
+        form {
+            width: 300px;
+            border: 1px solid #eee;
+            padding: 25px;
+        }
+        
+        input,
+        textarea {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        span {
+            margin: 10px 0 0;
+            display: inline-block;
+            font-family: cursive;
+        }
+        
+        input[type=submit] {
+            height: 40px;
+            background-color: green;
+            color: white;
+        }
+        .output{
+            font-size: 1.5em;
+            font-family: fantasy;
+        }
+    </style>
+</head>
+ 
+<body>    <div class="output"></div>
+    <form name="myForm"> <span>Name:</span>
+        <input type="text" name="name" value="">
+        <br><span>Email:</span>
+        <input type="email" name="email" value="">
+        <br><span> Message:</span>
+        <textarea name="message"></textarea>
+        <br>
+        <input type="submit" value="Send Message" /> </form>
+ 
+    <script>
+        const url = "https://script.google.com/macros/s/AKfycbyBjV62Mk_X9yGumCrvLtXCWc028ZLcXJLvIB7O4SmrANhv2pA-FmwM-rAC19PnKIEp8Q/exec";
+        const form = document.forms.namedItem("myForm");
+        console.log(form);
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+            createMessage();
+        })
+ 
+        function createMessage() {
+            console.log("submitted");
+            const formData = new FormData(form);
+            console.log(formData);
+            fetch(url, {
+                method: "POST", 
+                body: formData
+            }).then(function (response) {
+                console.log(response)
+                return response.json()
+            }).then(function (data) {
+                console.log(data);
+                let tempMessage = "";
+                if (data.status === 200) {
+                    tempMessage = "Your email has been received Ticket ID#" + data.value;
+                    form.reset();
+                }
+                else {
+                    tempMessage = "Oooops something went wrong";
+                }
+                document.querySelector(".output").innerHTML = tempMessage;
+            }).catch(e => {
+                console.log(e)
+            })
+        }
+ 
+    </script>
+</body>
